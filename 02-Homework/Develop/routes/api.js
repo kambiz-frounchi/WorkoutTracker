@@ -19,10 +19,17 @@ router.get("/api/workouts", (req, res) => {
 
 router.get("/api/workouts/range", (req, res) => {
   console.log("range");
+  //get all workouts from DB and sort in descending order;
+  //there is no formal specification for what this API should do
+  //and the front-end is not really paying attention to the date of the exercises
+  //and simply showing one exercise per day in the duration line chart and the weight pie chart;
+  //it is not obvious as to whether this API should somehow only show the aggregate exercise duration and weight per day 
+  //(note you cannot combine the exercise names ...)
+  const workouts = [];
   Workout.find({})
     .sort({ day: -1 })
-    .then(dbWorkout => {
-      res.json(dbWorkout);
+    .then(dbWorkouts => {
+      res.json(dbWorkouts);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -33,6 +40,16 @@ router.put("/api/workouts/:id", (req, res) => {
   console.log("put");
   console.log(req.params.id);
   console.log(req.body);
+
+  //only process new exercise if it has a name
+  //this is to avoid adding an empty exercise entry in the workout
+  //which the front-end is posting to the back-end when the user
+  //presses the complete workout button
+
+  if (!req.body.name) {
+    res.json({});
+    return;
+  }
 
   const exercise = {
     type: req.body.type,
@@ -56,7 +73,9 @@ router.put("/api/workouts/:id", (req, res) => {
     },
     {
       $set: {
-        day: new Date(),
+        day: new Date()
+      },
+      $push: {
         exercises: [exercise]
       }
     }
