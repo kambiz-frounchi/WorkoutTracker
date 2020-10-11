@@ -23,7 +23,4 @@ htmlRouter.get("/stats", (req, res) => {
 });
 
 
-
-
-
 module.exports = htmlRouter;

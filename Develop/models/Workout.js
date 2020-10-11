@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+//only common fields defined in exerciseSchema;
+//the discrimanator key (type property) determines whether the exercise array is 
+//going to use the cardio schema or the resistance schema
 const exerciseSchema = new Schema({
   type: {
     type: String
@@ -15,6 +18,7 @@ const exerciseSchema = new Schema({
   }
 }, {discriminatorKey: "type"});
 
+//workoutSchema consists of the day and an array of exercises (defined by exerciseSchema)
 const workoutSchema = new Schema({
   day: {
     type: Date
