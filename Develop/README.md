@@ -9,4 +9,4 @@ This is a simple application that allows the user to keep track of their workout
 
 ## Instructions
 
-The app is deployed using heroku [here](https://sheltered-plateau-59057.herokuapp.com/). Simply navigate to the URL!
+The app is deployed using heroku [here](https://nameless-depths-55689.herokuapp.com/). Simply navigate to the URL!
